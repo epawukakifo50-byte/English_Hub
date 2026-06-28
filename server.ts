@@ -147,13 +147,18 @@ app.post("/api/words", (req, res) => {
     const now = new Date();
     const createdStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
+    let finalSource = source ? source.trim() : "";
+    if (finalSource) {
+      finalSource = `[[${finalSource.replace(/^\[\[(.*)\]\]$/, '$1')}]]`;
+    }
+
     const frontmatterData: any = {
       type: "vocabulary",
       word,
       translation,
       register: "general",
       status,
-      source: source ? `[[${source}]]` : "",
+      source: finalSource,
       module: "english-experience",
       created: createdStr
     };
@@ -184,8 +189,13 @@ app.put("/api/words/:id", (req, res) => {
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const parsed = matter(fileContent);
 
+    let finalSource = updates.data.source || "";
+    if (finalSource) {
+      finalSource = `[[${finalSource.replace(/^\[\[(.*)\]\]$/, '$1')}]]`;
+    }
+
     // Update frontmatter
-    parsed.data = { ...parsed.data, ...updates.data };
+    parsed.data = { ...parsed.data, ...updates.data, source: finalSource };
     
     // Update content if provided
     const newContent = updates.content !== undefined ? updates.content : parsed.content;

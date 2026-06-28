@@ -70,7 +70,7 @@ export function WordModal({ isOpen, onClose, onSaved, editingWord }: Props) {
           setPastTrans('');
           setParticipleTrans('');
         }
-        setSource(editingWord.source ? editingWord.source.replace(/\[\[(.*?)\]\]/, '$1') : '');
+        setSource(editingWord.source ? editingWord.source.replace(/^\[\[(.*)\]\]$/, '$1') : '');
         setContent(editingWord.content || '');
       } else {
         setWord('');
