@@ -189,13 +189,16 @@ app.put("/api/words/:id", (req, res) => {
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const parsed = matter(fileContent);
 
-    let finalSource = updates.data.source || "";
-    if (finalSource) {
-      finalSource = `[[${finalSource.replace(/^\[\[(.*)\]\]$/, '$1')}]]`;
+    if (updates.data.source !== undefined) {
+      let finalSource = updates.data.source.trim();
+      if (finalSource) {
+        finalSource = `[[${finalSource.replace(/^\[\[(.*)\]\]$/, '$1')}]]`;
+      }
+      updates.data.source = finalSource;
     }
 
     // Update frontmatter
-    parsed.data = { ...parsed.data, ...updates.data, source: finalSource };
+    parsed.data = { ...parsed.data, ...updates.data };
     
     // Update content if provided
     const newContent = updates.content !== undefined ? updates.content : parsed.content;
