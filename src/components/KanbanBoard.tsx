@@ -79,29 +79,29 @@ export function KanbanBoard({ words, onRefresh, onEditWord }: Props) {
                       {word.isIrregularVerb ? (
                         <div className="flex flex-col gap-1.5 text-[10px] w-full pr-4">
                           <div className="flex items-center justify-between w-full border-b border-neutral-800/50 pb-1">
-                            <div className="flex items-center gap-2 w-1/2 pr-2 border-r border-neutral-800/50">
+                            <div className="flex items-center gap-2 w-full group-hover/card:w-1/2 group-hover/card:pr-2 border-r border-transparent group-hover/card:border-neutral-800/50 transition-all duration-300">
                               <span className="text-neutral-500 font-normal min-w-[14px]">V1</span> 
                               <span className="truncate">{(word.word.split(' | ').length > 1 ? word.word.split(' | ') : word.word.split(' - '))[0] || ''}</span>
                             </div>
-                            <div className="w-1/2 pl-2 text-neutral-400 font-normal truncate">
+                            <div className="w-0 overflow-hidden group-hover/card:w-1/2 group-hover/card:pl-2 text-neutral-400 font-normal truncate opacity-0 group-hover/card:opacity-100 transition-all duration-300">
                               {(word.translation?.split(' | ').length > 1 ? word.translation.split(' | ') : word.translation?.split(' - ') || [])[0] || '-'}
                             </div>
                           </div>
                           <div className="flex items-center justify-between w-full border-b border-neutral-800/50 pb-1">
-                            <div className="flex items-center gap-2 w-1/2 pr-2 border-r border-neutral-800/50">
+                            <div className="flex items-center gap-2 w-full group-hover/card:w-1/2 group-hover/card:pr-2 border-r border-transparent group-hover/card:border-neutral-800/50 transition-all duration-300">
                               <span className="text-neutral-500 font-normal min-w-[14px]">V2</span> 
                               <span className="truncate">{(word.word.split(' | ').length > 1 ? word.word.split(' | ') : word.word.split(' - '))[1] || ''}</span>
                             </div>
-                            <div className="w-1/2 pl-2 text-neutral-400 font-normal truncate">
+                            <div className="w-0 overflow-hidden group-hover/card:w-1/2 group-hover/card:pl-2 text-neutral-400 font-normal truncate opacity-0 group-hover/card:opacity-100 transition-all duration-300">
                               {(word.translation?.split(' | ').length > 1 ? word.translation.split(' | ') : word.translation?.split(' - ') || [])[1] || '-'}
                             </div>
                           </div>
                           <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center gap-2 w-1/2 pr-2 border-r border-neutral-800/50">
+                            <div className="flex items-center gap-2 w-full group-hover/card:w-1/2 group-hover/card:pr-2 border-r border-transparent group-hover/card:border-neutral-800/50 transition-all duration-300">
                               <span className="text-neutral-500 font-normal min-w-[14px]">V3</span> 
                               <span className="truncate">{(word.word.split(' | ').length > 1 ? word.word.split(' | ') : word.word.split(' - '))[2] || ''}</span>
                             </div>
-                            <div className="w-1/2 pl-2 text-neutral-400 font-normal truncate">
+                            <div className="w-0 overflow-hidden group-hover/card:w-1/2 group-hover/card:pl-2 text-neutral-400 font-normal truncate opacity-0 group-hover/card:opacity-100 transition-all duration-300">
                               {(word.translation?.split(' | ').length > 1 ? word.translation.split(' | ') : word.translation?.split(' - ') || [])[2] || '-'}
                             </div>
                           </div>
@@ -114,16 +114,22 @@ export function KanbanBoard({ words, onRefresh, onEditWord }: Props) {
                       <Pencil size={12} />
                     </button>
                   </div>
-                  {!word.isIrregularVerb && (
-                    <div className="text-neutral-400 text-xs mb-3 truncate">
-                      {word.translation}
+                  <div className="grid grid-rows-[0fr] group-hover/card:grid-rows-[1fr] transition-all duration-300 ease-in-out">
+                    <div className="overflow-hidden">
+                      <div className="flex flex-col gap-2 items-start opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 pt-2">
+                        {!word.isIrregularVerb && (
+                          <div className="text-neutral-400 text-xs truncate w-full">
+                            {word.translation}
+                          </div>
+                        )}
+                        {word.source && (
+                          <div className={cn("text-[10px] text-black inline-block px-2 py-0.5 font-mono uppercase font-bold truncate max-w-full rounded", col.color.replace('text-', 'bg-'))}>
+                            {word.source}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  )}
-                  {word.source && (
-                    <div className={cn("text-[10px] text-black inline-block px-2 py-0.5 font-mono uppercase font-bold truncate max-w-full rounded", col.color.replace('text-', 'bg-'))}>
-                      {word.source}
-                    </div>
-                  )}
+                  </div>
                 </div>
               ))}
               {colWords.length === 0 && (

@@ -15,7 +15,9 @@ export function ReviewSession({ words, onComplete }: Props) {
   const [showAnswer, setShowAnswer] = useState(false);
 
   // Simple logic to pick words that are learning or mastering
-  const reviewQueue = words.filter(w => w.status === 'learning' || w.status === 'mastering').sort(() => Math.random() - 0.5);
+  const [reviewQueue] = useState(() => {
+    return words.filter(w => w.status === 'learning' || w.status === 'mastering').sort(() => Math.random() - 0.5);
+  });
 
   if (reviewQueue.length === 0) {
     return (
