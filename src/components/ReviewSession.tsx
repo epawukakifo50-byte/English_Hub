@@ -106,7 +106,18 @@ export function ReviewSession({ words, onComplete }: Props) {
             </div>
           </div>
         ) : (
-          <h2 className="text-5xl font-bold text-white mb-6 uppercase tracking-wider">{currentWord.word}</h2>
+          <div className={cn("mx-auto", showAnswer ? "w-full max-w-3xl flex items-center justify-between gap-8 mb-6" : "mb-6")}>
+            <div className={cn("flex-1", showAnswer ? "text-right pr-8 border-r border-neutral-800/50" : "")}>
+              <h2 className={cn("font-bold text-white uppercase tracking-wider", showAnswer ? "text-4xl md:text-5xl" : "text-5xl")}>
+                {currentWord.word}
+              </h2>
+            </div>
+            {showAnswer && (
+              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }} className="flex-1 text-left pl-8 text-3xl md:text-4xl text-neon font-bold uppercase tracking-widest break-words">
+                {currentWord.translation}
+              </motion.div>
+            )}
+          </div>
         )}
         
         {showAnswer ? (
@@ -116,11 +127,8 @@ export function ReviewSession({ words, onComplete }: Props) {
             transition={{ duration: 0.4 }}
             className="space-y-6"
           >
-            {!currentWord.isIrregularVerb && (
-              <div className="text-2xl text-neon font-bold uppercase tracking-widest">{currentWord.translation}</div>
-            )}
             {currentWord.content && (
-              <div className="text-neutral-400 text-xs uppercase tracking-wider mt-4 border-l-2 border-neon pl-4 text-left">
+              <div className="text-neutral-400 text-xs uppercase tracking-wider mt-4 border-l-2 border-neon pl-4 text-left max-w-3xl mx-auto">
                 {currentWord.content}
               </div>
             )}

@@ -3,6 +3,7 @@ import { Word } from '../types';
 import { X, Trash2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { addWord, updateWordFull, fetchContexts, deleteWord } from '../api';
+import { ComboBox } from './ComboBox';
 
 interface Props {
   isOpen: boolean;
@@ -238,17 +239,13 @@ export function WordModal({ isOpen, onClose, onSaved, editingWord }: Props) {
           </div>
           <div>
             <label className="block text-xs text-neutral-500 mb-1 tracking-wider uppercase">Context Link</label>
-            <input 
-              type="text" 
-              list="contexts"
-              value={source} 
-              onChange={e => setSource(e.target.value)}
-              className="w-full bg-neutral-950 border border-neutral-800 px-4 py-2.5 text-neutral-300 focus:border-accent-amber focus:ring-1 focus:ring-accent-amber focus:outline-none rounded-tl-xl rounded-br-xl transition-all"
+          <ComboBox
+              options={contexts}
+              value={source}
+              onChange={setSource}
               placeholder="Select or type context"
+              inputClassName="py-2.5"
             />
-            <datalist id="contexts">
-              {contexts.map(c => <option key={c} value={c} />)}
-            </datalist>
           </div>
           <div>
             <label className="block text-xs text-neutral-500 mb-1 tracking-wider uppercase">Notes Log</label>

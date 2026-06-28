@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Terminal, X, CheckSquare } from 'lucide-react';
 import { addWord, fetchContexts } from '../api';
 import { motion } from 'motion/react';
+import { ComboBox } from './ComboBox';
 
 export function StandaloneCapture() {
   const [word, setWord] = useState('');
@@ -166,16 +167,12 @@ export function StandaloneCapture() {
         </div>
         <div>
           <label className="block text-xs font-bold text-neutral-500 mb-2 uppercase tracking-widest">Source_Reference</label>
-          <input 
-            type="text" 
-            list="contexts"
-            value={source} 
-            onChange={e => setSource(e.target.value)}
-            className="w-full bg-neutral-950 border border-neutral-800 px-4 py-3 text-neutral-300 focus:border-accent-amber focus:ring-1 focus:ring-accent-amber focus:outline-none uppercase rounded-tl-xl rounded-br-xl transition-all"
+          <ComboBox
+            options={contexts}
+            value={source}
+            onChange={setSource}
+            placeholder="Select or type source"
           />
-          <datalist id="contexts">
-            {contexts.map(c => <option key={c} value={c} />)}
-          </datalist>
         </div>
         <div className="flex-1 flex flex-col">
           <label className="block text-xs font-bold text-neutral-500 mb-2 uppercase tracking-widest">Telemetry_Notes</label>

@@ -40,7 +40,7 @@ export function KanbanBoard({ words, onRefresh, onEditWord }: Props) {
   };
 
   return (
-    <div className="flex gap-4 h-full overflow-x-auto pb-4 font-mono">
+    <div className="flex justify-center gap-4 h-full overflow-x-auto pb-4 font-mono w-full mx-auto max-w-7xl">
       {columns.map(col => {
         const colWords = words.filter(w => w.status === col.id);
         const Icon = col.icon;

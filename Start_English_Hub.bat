@@ -11,7 +11,7 @@ IF NOT EXIST "node_modules\" (
 
 echo.
 echo Starting the local server...
-start /min cmd /c "npm run dev"
+start cmd /k "npm run dev"
 
 echo Waiting for server to start...
 timeout /t 3 /nobreak > NUL
