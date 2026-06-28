@@ -92,17 +92,18 @@ export function WordModal({ isOpen, onClose, onSaved, editingWord }: Props) {
     e.preventDefault();
     const finalWord = isIrregular ? [baseForm, pastForm, participleForm].map(s => s.trim()).filter(Boolean).join(' | ') : word;
     const finalTrans = isIrregular ? [baseTrans, pastTrans, participleTrans].map(s => s.trim()).join(' | ') : translation;
+    const formattedSource = source.trim() ? (source.trim().startsWith('[[') ? source.trim() : `[[${source.trim()}]]`) : "";
     if (!finalWord) return;
     
     setIsSubmitting(true);
     try {
       if (editingWord) {
         await updateWordFull(editingWord.id, {
-          data: { word: finalWord, translation: finalTrans, source, isIrregularVerb: isIrregular },
+          data: { word: finalWord, translation: finalTrans, source: formattedSource, isIrregularVerb: isIrregular },
           content
         });
       } else {
-        await addWord({ word: finalWord, translation: finalTrans, source, content, status: 'inbox', isIrregularVerb: isIrregular });
+        await addWord({ word: finalWord, translation: finalTrans, source: formattedSource, content, status: 'inbox', isIrregularVerb: isIrregular });
       }
       onSaved();
       onClose();

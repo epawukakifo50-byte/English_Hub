@@ -28,11 +28,12 @@ export function StandaloneCapture() {
     e.preventDefault();
     const finalWord = isIrregular ? [baseForm, pastForm, participleForm].map(s => s.trim()).filter(Boolean).join(' | ') : word;
     const finalTrans = isIrregular ? [baseTrans, pastTrans, participleTrans].map(s => s.trim()).join(' | ') : translation;
+    const formattedSource = source.trim() ? (source.trim().startsWith('[[') ? source.trim() : `[[${source.trim()}]]`) : "";
     if (!finalWord) return;
     
     setIsSubmitting(true);
     try {
-      await addWord({ word: finalWord, translation: finalTrans, source, content, status: 'inbox', isIrregularVerb: isIrregular });
+      await addWord({ word: finalWord, translation: finalTrans, source: formattedSource, content, status: 'inbox', isIrregularVerb: isIrregular });
       setSuccess(true);
       setTimeout(() => {
         window.close(); // Only works if window was opened by script

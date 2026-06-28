@@ -34,10 +34,10 @@ export function MainApp() {
     setIsWordModalOpen(true);
   };
 
-  // Keyboard shortcut for Quick Add (Ctrl+Shift+A)
+  // Keyboard shortcut for Quick Add (Alt+A or Alt+C)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+      if (e.altKey && (e.key.toLowerCase() === 'a' || e.key.toLowerCase() === 'c')) {
         e.preventDefault();
         openAddModal();
       }
@@ -137,7 +137,7 @@ export function MainApp() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="h-full flex flex-col"
+              className="h-full flex flex-col w-full"
             >
               <div className="mb-8 border-b border-neutral-800 pb-4">
                 <h1 className="text-3xl font-bold text-neon tracking-widest uppercase">SYS.OP // KANBAN</h1>
